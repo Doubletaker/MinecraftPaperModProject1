@@ -1,6 +1,6 @@
 {
   "model": {
-    "type": "model",
+    "type": "minecraft:model",
     "model": "project1:item/pink_garnet"
   }
 }

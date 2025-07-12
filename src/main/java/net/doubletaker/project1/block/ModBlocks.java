@@ -4,6 +4,7 @@ import net.doubletaker.project1.Project1;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.ExperienceDroppingBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -13,35 +14,45 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
-
-import java.util.function.Function;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 public class ModBlocks {
 
     public static final Block PINK_GARNET_BLOCK = register("pink_garnet_block",
             Block::new,
             AbstractBlock.Settings.create()
-                    .strength(4f)
+                    .strength(2f)
                     .requiresTool()
-                    .sounds(BlockSoundGroup.AMETHYST_BLOCK)
+                    .sounds(BlockSoundGroup.AMETHYST_BLOCK),
+            true
     );
 
+
     public static final Block PINK_GARNET_ORE = register("pink_garnet_ore",
-            Block::new,
+            settings -> new ExperienceDroppingBlock(
+                    UniformIntProvider.create(1, 3),
+                    settings
+            ),
             AbstractBlock.Settings.create()
                     .strength(2f)
                     .requiresTool()
-                    .sounds(BlockSoundGroup.DEEPSLATE)
+                    .sounds(BlockSoundGroup.STONE),
+            true
     );
 
+
+
+
     // --- Main register method using RegistryKeys ---
-    private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings) {
+    private static Block register(String name, java.util.function.Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean shouldRegisterItem) {
         RegistryKey<Block> blockKey = RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Project1.MOD_ID, name));
         Block block = blockFactory.apply(settings.registryKey(blockKey));
 
-        RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Project1.MOD_ID, name));
-        BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey));
-        Registry.register(Registries.ITEM, itemKey, blockItem);
+        if (shouldRegisterItem) {
+            RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Project1.MOD_ID, name));
+            BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey));
+            Registry.register(Registries.ITEM, itemKey, blockItem);
+        }
 
         return Registry.register(Registries.BLOCK, blockKey, block);
     }

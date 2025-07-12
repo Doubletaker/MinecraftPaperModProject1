@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.4,
+  "group": "coal",
+  "ingredient": "project1:raw_pink_garnet",
+  "result": {
+    "id": "project1:pink_garnet"
+  }
+}

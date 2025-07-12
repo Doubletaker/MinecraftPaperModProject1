@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "project1:pink_garnet_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "project1:pink_garnet"
+  }
+}
