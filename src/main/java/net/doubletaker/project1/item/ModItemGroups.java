@@ -42,6 +42,7 @@ public class ModItemGroups {
         ItemGroupEvents.modifyEntriesEvent(PINK_GARNET_ITEMS_GROUP).register(entries -> {
             entries.add(ModItems.PINK_GARNET);
             entries.add(ModItems.RAW_PINK_GARNET);
+            entries.add(ModItems.CHISEL);
         });
 
         // Add entries to blocks tab

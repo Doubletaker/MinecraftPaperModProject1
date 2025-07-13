@@ -5,6 +5,7 @@ import net.doubletaker.project1.item.ModItemGroups;
 import net.doubletaker.project1.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.item.ToolMaterial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,7 @@ public class Project1 implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItemGroups.registerItemGroups();
+
 
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
