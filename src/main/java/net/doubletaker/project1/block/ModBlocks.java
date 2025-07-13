@@ -16,6 +16,8 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 
+import java.util.function.Function;
+
 public class ModBlocks {
 
     public static final Block PINK_GARNET_BLOCK = register("pink_garnet_block",
@@ -23,8 +25,7 @@ public class ModBlocks {
             AbstractBlock.Settings.create()
                     .strength(2f)
                     .requiresTool()
-                    .sounds(BlockSoundGroup.AMETHYST_BLOCK),
-            true
+                    .sounds(BlockSoundGroup.AMETHYST_BLOCK)
     );
 
 
@@ -36,34 +37,27 @@ public class ModBlocks {
             AbstractBlock.Settings.create()
                     .strength(2f)
                     .requiresTool()
-                    .sounds(BlockSoundGroup.STONE),
-            true
+                    .sounds(BlockSoundGroup.STONE)
     );
 
 
 
 
     // --- Main register method using RegistryKeys ---
-    private static Block register(String name, java.util.function.Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean shouldRegisterItem) {
+    private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings) {
         RegistryKey<Block> blockKey = RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Project1.MOD_ID, name));
         Block block = blockFactory.apply(settings.registryKey(blockKey));
 
-        if (shouldRegisterItem) {
-            RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Project1.MOD_ID, name));
-            BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey));
-            Registry.register(Registries.ITEM, itemKey, blockItem);
-        }
+        RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Project1.MOD_ID, name));
+        BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey));
+        Registry.register(Registries.ITEM, itemKey, blockItem);
 
         return Registry.register(Registries.BLOCK, blockKey, block);
     }
 
     public static void registerModBlocks() {
         Project1.LOGGER.info("Registering Mod Blocks for " + Project1.MOD_ID);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
-            entries.add(PINK_GARNET_BLOCK);
-        });
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
-            entries.add(PINK_GARNET_ORE);
-        });
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> entries.add(PINK_GARNET_BLOCK));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> entries.add(PINK_GARNET_ORE));
     }
 }
